@@ -20,65 +20,72 @@ romania = Graph( ['Or', 'Ne', 'Ze', 'Ia', 'Ar', 'Si', 'Fa',
 ] )
 #romania.Print()
 
-def bfs(start, graph, goal):
+def bfs(start, goal, graph):
     explored = []
-    queue2 = queue.Queue()
+    q = queue.Queue()
+    path = [0, start]
+    q.put(path)
 
-    queue2.put(getNode(start, graph.nodes))
+    while not q.empty():
+        path = q.get()
+        node_name = path[-1]
+        if node_name not in explored:
+            explored.append(node_name)
+            node = getNode(node_name, graph.nodes)
+            for edge in node.edges:
+                path1 = path.copy()
+                path1[0] += edge.value
+                path1.append(edge.end.name)
+                if edge.end.name == goal:
+                   return path1
+                q.put(path1);
+    return None
 
+def dfs(start, goal, graph):
+    explored = []
+    q = queue.LifoQueue()
+    path = [0, start]
+    q.put(path)
 
-    while not queue2.empty():
-        node = queue2.get()
-        if node not in explored:
-            explored.append(node)
-            for neighbour in node.edges:
-                queue2.put(getNode(neighbour.end.name, graph.nodes))
-    return explored
+    while not q.empty():
+        path = q.get()
+        node_name = path[-1]
+        if node_name not in explored:
+            explored.append(node_name)
+            node = getNode(node_name, graph.nodes)
+            for edge in node.edges:
+                path1 = path.copy()
+                path1[0] += edge.value
+                path1.append(edge.end.name)
+                if edge.end.name == goal:
+                   return path1
+                q.put(path1);
+    return None
 
-x=bfs("Ti",romania)
-for xs in x:
-    print(xs.name)
+def ucs(start, goal, graph):
+    explored = []
+    q = queue.PriorityQueue()
+    path = [0, start]
+    q.put(path)
 
-# def breadth_first_search(graph, start, end):
-#     explored = []
-#     queue2 = queue.Queue()
-#     queue2.put(getNode(start, graph.nodes))
-#
-#     while not queue2.empty():
-#         node = queue2.get()
-#         print(node.name)
-#         if node not in explored:
-#             explored.append(node)
-#             for neighbour in node.edges:
-#                 neighbourNode = getNode(neighbour.end.name, graph.nodes);
-#                 if neighbourNode not in explored:
-#                     queue2.put(neighbourNode)
-#
-#     return
+    while not q.empty():
+        path = q.get()
+        node_name = path[-1]
+        if node_name not in explored:
+            explored.append(node_name)
+            node = getNode(node_name, graph.nodes)
+            for edge in node.edges:
+                path1 = path.copy()
+                path1[0] += edge.value
+                path1.append(edge.end.name)
+                if edge.end.name == goal:
+                   return path1
+                q.put(path1);
+    return None
 
-
-
-
-#x = breadth_first_search(romania, "Ti","Ti")
-#action: abzugehende dinger
-
-
-#
-# def breadthFirstSearch(start, goal):
-#     frontier = queue.Queue()
-#     frontier.put(getNode(start,romania.nodes))
-#     visited = []
-#     costs = 0
-#
-#     while(not frontier.empty()):
-#         node = frontier.get()
-#         visited.append(node.name)
-#
-#         for edge in node.edges:
-#             if(edge.end.name not in visited):
-#                 if(edge.end.name == goal): print("jawohl")
-#                 frontier.put(edge.end)
-#     return None
-#
-# breadthFirstSearch("Bu","Ti")
-#
+print("BFS:")
+print(bfs("Bu","Ti", romania))
+print("DFS:")
+print(dfs("Bu","Ti", romania))
+print("ucs:")
+print(ucs("Bu","Ti", romania))
