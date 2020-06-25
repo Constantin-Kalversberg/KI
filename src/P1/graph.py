@@ -1,5 +1,5 @@
 from prettytable import PrettyTable
-from src.utils import *
+from src.P1.utils import *
 
 
 class Node:

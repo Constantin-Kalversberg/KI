@@ -30,15 +30,6 @@ def printMap(field):
             out += column.symbol
         print(out)
 
-# def removeFromPq(q, item):
-#     returnQueue = queue.PriorityQueue()
-#     while not q.empty():
-#         x = q.get()
-#         if(not x[1] == item):
-#             #returnQueue.put((x[0], x[1]))
-#             returnQueue.put(x)
-#     return returnQueue
-
 def removeItemFromPQ(q, item):
     returnQueue = []
     heapq.heapify(returnQueue)
@@ -50,11 +41,9 @@ def removeItemFromPQ(q, item):
         heapq.heappush(returnQueue, i)
     return returnQueue
 
-
 def AStar():
     open = []
     heapq.heapify(open)
-
     closed = []
 
     #initalize

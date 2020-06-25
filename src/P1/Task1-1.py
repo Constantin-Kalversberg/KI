@@ -1,4 +1,4 @@
-from src.graph import *
+from src.P1.graph import *
 from collections import deque
 import heapq
 
